@@ -4,13 +4,13 @@ from datetime import datetime
 from PyQt6.QtWidgets import (QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
                              QPushButton, QLabel, QFileDialog, QTabWidget,
                              QGroupBox, QMessageBox, QStyleFactory)
-from PyQt6.QtCore import Qt, QSettings
+from PyQt6.QtCore import QSettings
 from PyQt6.QtGui import QActionGroup, QAction
 
-from file_processor import FileProcessor
+from logic.file_processor import FileProcessor
 from palettes import HighContrastDarkPalette, HighContrastLightPalette
-from history_manager import HistoryManager
-from group_manager import GroupManager
+from logic.history_manager import HistoryManager
+from logic.group_manager import GroupManager
 
 
 class MainWindow(QMainWindow):
