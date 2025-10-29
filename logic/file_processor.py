@@ -322,7 +322,7 @@ class FileProcessor:
     @staticmethod
     def _partially_render_vm(raw_vm, scenario, structure):
         placeholders = FileProcessor._collect_placeholders(raw_vm)
-        filled_vm = raw_vmF
+        filled_vm = raw_vm
         replacements = {}
 
         # Создаем карту путей для более точного поиска

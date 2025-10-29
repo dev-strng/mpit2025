@@ -45,6 +45,9 @@ class HistoryManager:
         self.sort_combo.addItem("По имени файла (Я-А)")
         self.sort_combo.addItem("По проекту (А-Я)")
         self.sort_combo.addItem("По проекту (Я-А)")
+        self.sort_combo.addItem("По результату (А-Я)")
+        self.sort_combo.addItem("По результату (Я-А)")
+
         self.sort_combo.currentIndexChanged.connect(self.apply_sorting)
         sort_layout.addWidget(self.sort_combo)
 
@@ -62,7 +65,7 @@ class HistoryManager:
         self.history_table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
 
         # Включаем сортировку по клику на заголовок
-        self.history_table.setSortingEnabled(True)
+        self.history_table.setSortingEnabled(False)
         self.history_table.horizontalHeader().sectionClicked.connect(self.header_clicked)
 
         layout.addWidget(self.history_table)
@@ -152,10 +155,16 @@ class HistoryManager:
         elif index == 3:  # По имени файла (Я-А)
             self.sort_column = 0
             self.sort_order = Qt.SortOrder.DescendingOrder
-        elif index == 4:
+        elif index == 4:  # По результату (А-Я)
+            self.sort_column = 2
+            self.sort_order = Qt.SortOrder.AscendingOrder
+        elif index == 5:  # По результату (Я-А)
+            self.sort_column = 2
+            self.sort_order = Qt.SortOrder.DescendingOrder
+        elif index == 6:  # По проекту (А-Я)
             self.sort_column = 3
             self.sort_order = Qt.SortOrder.AscendingOrder
-        elif index == 5:
+        elif index == 7:  # По проекту (Я-А)
             self.sort_column = 3
             self.sort_order = Qt.SortOrder.DescendingOrder
 
@@ -167,31 +176,29 @@ class HistoryManager:
             self.history_table.sortItems(self.sort_column, self.sort_order)
 
     def header_clicked(self, logical_index):
-        # Обработка клика на заголовок таблицы
-        if self.history_table.horizontalHeader().sortIndicatorSection() == logical_index:
-            # Если кликнули на тот же столбец, меняем порядок сортировки
-            current_order = self.history_table.horizontalHeader().sortIndicatorOrder()
-            new_order = Qt.SortOrder.DescendingOrder if current_order == Qt.SortOrder.AscendingOrder else Qt.SortOrder.AscendingOrder
-            self.history_table.sortItems(logical_index, new_order)
-
-            # Обновляем комбобокс сортировки в соответствии с выбранной сортировкой
-            if logical_index == 0:  # Столбец "Файл"
-                self.sort_combo.setCurrentIndex(2 if new_order == Qt.SortOrder.AscendingOrder else 3)
-            elif logical_index == 1:  # Столбец "Дата"
-                self.sort_combo.setCurrentIndex(1 if new_order == Qt.SortOrder.AscendingOrder else 0)
-            elif logical_index == 3:  # Столбец "Проект"
-                self.sort_combo.setCurrentIndex(4 if new_order == Qt.SortOrder.AscendingOrder else 5)
+        # Переключение сортировки
+        if self.sort_column == logical_index:
+            self.sort_order = (
+                Qt.SortOrder.AscendingOrder
+                if self.sort_order == Qt.SortOrder.DescendingOrder
+                else Qt.SortOrder.DescendingOrder
+            )
         else:
-            # Если кликнули на другой столбец, сортируем по нему
-            self.history_table.sortItems(logical_index, Qt.SortOrder.AscendingOrder)
+            self.sort_column = logical_index
+            self.sort_order = Qt.SortOrder.AscendingOrder
 
-            # Обновляем комбобокс сортировки в соответствии с выбранной сортировкой
-            if logical_index == 0:  # Столбец "Файл"
-                self.sort_combo.setCurrentIndex(2)
-            elif logical_index == 1:  # Столбец "Дата"
-                self.sort_combo.setCurrentIndex(1)
-            elif logical_index == 3:  # Столбец "Группа"
-                self.sort_combo.setCurrentIndex(4)
+        self.history_table.sortItems(self.sort_column, self.sort_order)
+        self.history_table.horizontalHeader().setSortIndicator(self.sort_column, self.sort_order)
+
+        # Синхронизируем комбобокс
+        if logical_index == 0:  # Файл
+            self.sort_combo.setCurrentIndex(2 if self.sort_order == Qt.SortOrder.AscendingOrder else 3)
+        elif logical_index == 1:  # Дата
+            self.sort_combo.setCurrentIndex(1 if self.sort_order == Qt.SortOrder.AscendingOrder else 0)
+        elif logical_index == 2:  # Результат
+            self.sort_combo.setCurrentIndex(6 if self.sort_order == Qt.SortOrder.AscendingOrder else 7)
+        elif logical_index == 3:  # Проект
+            self.sort_combo.setCurrentIndex(4 if self.sort_order == Qt.SortOrder.AscendingOrder else 5)
 
     def show_history_context_menu(self, position):
         menu = QMenu()

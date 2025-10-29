@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soc:AppDataRequest xmlns:soc="http://socit.ru/kalin/orders/2.0.0"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <soc:SetRequest>
+    <soc:orderId>12345</soc:orderId>
+    <soc:ServiceCode>3900000000173812673</soc:ServiceCode>
+    <soc:ServiceName>Выплата молодой семье при рождении третьего или последующего ребёнка</soc:ServiceName>
+    <soc:SpravID>1</soc:SpravID>
+    
+    <soc:userData>
+      <soc:lastName>Петров</soc:lastName>
+      <soc:firstName>Алексей</soc:firstName>
+      <soc:middleName>Сергеевич</soc:middleName>
+      <soc:birthDate>1985-03-15</soc:birthDate>
+      <soc:Sex>М</soc:Sex>
+      <soc:Snils>123-456-789-00</soc:Snils>
+      <soc:phone>+79991234567</soc:phone>
+      <soc:Email>petrov@mail.ru</soc:Email>
+      <soc:citizenship>РОССИЯ</soc:citizenship>
+      <soc:mrog>Москва</soc:mrog>
+    </soc:userData>
+
+    <soc:userDocument>
+      <soc:type>21</soc:type>
+      <soc:series>4510</soc:series>
+      <soc:number>123456</soc:number>
+      <soc:issuedBy>ОУФМС России по г. Москве</soc:issuedBy>
+      <soc:issueDate>2015-04-20</soc:issueDate>
+      <soc:departmentCode>770-001</soc:departmentCode>
+    </soc:userDocument>
+
+    <soc:children>
+      <soc:child>
+        <soc:childData>
+          <soc:lastName>Петрова</soc:lastName>
+          <soc:firstName>Мария</soc:firstName>
+          <soc:birthDate>2020-06-10</soc:birthDate>
+          <soc:Sex>Ж</soc:Sex>
+          <soc:citizenship>РОССИЯ</soc:citizenship>
+        </soc:childData>
+        <soc:childDocument>
+          <soc:type>106</soc:type>
+          <soc:number>IV-МЮ №123456</soc:number>
+          <soc:issuedBy>Отдел ЗАГС Центрального района г. Москвы</soc:issuedBy>
+          <soc:issueDate>2020-06-15</soc:issueDate>
+        </soc:childDocument>
+      </soc:child>
+    </soc:children>
+
+    <soc:regAddress>
+      <soc:fiasHouseCode>1234567890</soc:fiasHouseCode>
+      <soc:index>123456</soc:index>
+      <soc:town>Москва</soc:town>
+      <soc:street>ул. Ленина</soc:street>
+      <soc:house>15</soc:house>
+      <soc:apartment>42</soc:apartment>
+      <soc:strAddress>г. Москва, ул. Ленина, д. 15, кв. 42</soc:strAddress>
+    </soc:regAddress>
+
+    <soc:payment>
+      <soc:BankInfo>
+        <soc:bankName>Сбербанк России</soc:bankName>
+        <soc:bik>044525225</soc:bik>
+        <soc:account>40817810099910004321</soc:account>
+      </soc:BankInfo>
+    </soc:payment>
+
+    <soc:AppliedDocuments>
+      <soc:AppliedDocument>
+        <soc:Name>свидетельство_о_рождении.pdf</soc:Name>
+        <soc:URL>doc12345</soc:URL>
+        <soc:typeName>Свидетельство о рождении</soc:typeName>
+      </soc:AppliedDocument>
+    </soc:AppliedDocuments>
+
+  </soc:SetRequest>
+</soc:AppDataRequest>

@@ -63,17 +63,16 @@ class MainWindow(QMainWindow):
         layout.setSpacing(20)
 
         # Группа для выбора файлов
-        files_group = QGroupBox("1. Выбор файлов для генерации адаптивного VM шаблона")
+        files_group = QGroupBox("Выбор файлов для генерации адаптивного VM шаблона")
         files_group.setObjectName("file_group")
-        files_group.setStyleSheet("#file_group{font-size: 14pt; margin-top: 15px}")
+        files_group.setStyleSheet("#file_group{font-size: 14pt; margin-top: 15px;}")
         files_layout = QVBoxLayout()
-
 
         # Файл сценария
         scenario_layout = QHBoxLayout()
-        self.scenario_label = QLabel("2. Файл сценария: не выбран")
+        self.scenario_label = QLabel("1. Файл json: не выбран")
         self.scenario_label.setWordWrap(True)
-        btn_choose_scenario = QPushButton("Выбрать сценарий")
+        btn_choose_scenario = QPushButton("Выбрать json файл")
         btn_choose_scenario.clicked.connect(lambda: self.choose_file('scenario'))
         scenario_layout.addWidget(self.scenario_label, 4)
         scenario_layout.addWidget(btn_choose_scenario, 1)
@@ -82,9 +81,9 @@ class MainWindow(QMainWindow):
 
         # XSD файл
         xsd_layout = QHBoxLayout()
-        self.xsd_label = QLabel("3. XSD схема: не выбрана")
+        self.xsd_label = QLabel("2. XSD схема: не выбрана")
         self.xsd_label.setWordWrap(True)
-        btn_choose_xsd = QPushButton("Выбрать XSD")
+        btn_choose_xsd = QPushButton("Выбрать XSD файл")
         btn_choose_xsd.clicked.connect(lambda: self.choose_file('xsd'))
         xsd_layout.addWidget(self.xsd_label, 4)
         xsd_layout.addWidget(btn_choose_xsd, 1)
@@ -92,7 +91,8 @@ class MainWindow(QMainWindow):
 
         # Директория для сохранения
         output_layout = QHBoxLayout()
-        self.output_label = QLabel("4. Директория для сохранения: не выбрана (по умолчанию: текущая папка, указывать необязательно)")
+        self.output_label = QLabel(
+            "3. Директория для сохранения: не выбрана (по умолчанию: текущая папка, указывать необязательно)")
         self.output_label.setWordWrap(True)
         btn_choose_output = QPushButton("Выбрать директорию")
         btn_choose_output.clicked.connect(self.choose_output_dir)
@@ -103,7 +103,7 @@ class MainWindow(QMainWindow):
         files_group.setLayout(files_layout)
         layout.addWidget(files_group)
 
-        process_group = QGroupBox("5. Генерация шаблонов")
+        process_group = QGroupBox("4. Генерация шаблонов")
         process_layout = QVBoxLayout()
 
         process_buttons_layout = QHBoxLayout()
@@ -118,7 +118,6 @@ class MainWindow(QMainWindow):
         process_layout.addLayout(process_buttons_layout)
         process_layout.setAlignment(Qt.AlignmentFlag.AlignTop)
 
-
         process_group.setLayout(process_layout)
         layout.addWidget(process_group)
 
@@ -126,38 +125,12 @@ class MainWindow(QMainWindow):
         result_group = QGroupBox("Результат генерации")
         result_layout = QVBoxLayout()
 
+
         self.result_info = QLabel("Пусто")
         self.result_info.setWordWrap(True)
+        self.result_info.setStyleSheet("font-size: 11pt)")
         result_layout.addWidget(self.result_info)
 
-        # Splitter для двух текстовых полей
-        # splitter = QSplitter(Qt.Orientation.Horizontal)
-
-        # # Левая панель - template_raw.vm
-        # left_widget = QWidget()
-        # left_layout = QVBoxLayout()
-        # left_layout.addWidget(QLabel("template_raw.vm (чистый шаблон):"))
-        # self.raw_preview = QTextEdit()
-        # self.raw_preview.setPlaceholderText("Здесь будет отображен чистый VM шаблон...")
-        # self.raw_preview.setReadOnly(True)
-        # left_layout.addWidget(self.raw_preview)
-        # left_widget.setLayout(left_layout)
-        #
-        # # Правая панель - template_generated.vm
-        # right_widget = QWidget()
-        # right_layout = QVBoxLayout()
-        # right_layout.addWidget(QLabel("template_generated.vm (с подстановкой):"))
-        # self.filled_preview = QTextEdit()
-        # self.filled_preview.setPlaceholderText("Здесь будет отображен VM шаблон с частичной подстановкой...")
-        # self.filled_preview.setReadOnly(True)
-        # right_layout.addWidget(self.filled_preview)
-        # right_widget.setLayout(right_layout)
-        #
-        # splitter.addWidget(left_widget)
-        # splitter.addWidget(right_widget)
-        # splitter.setSizes([600, 600])
-
-        # result_layout.addWidget(splitter)
         result_group.setLayout(result_layout)
         layout.addWidget(result_group)
         layout.setStretch(2, 1)
@@ -220,10 +193,10 @@ class MainWindow(QMainWindow):
         self.scenario_file = None
         self.xsd_file = None
         self.output_dir = None
-        self.scenario_label.setText("Файл сценария: не выбран")
+        self.scenario_label.setText("Файл json: не выбран")
         self.xsd_label.setText("XSD схема: не выбрана")
         self.output_label.setText("Директория для сохранения: не выбрана (по умолчанию: текущая папка)")
-        self.result_info.setText("Результат: ")
+        self.result_info.setText("Пусто")
 
     def generate_vm_template(self):
         if not all([self.scenario_file, self.xsd_file]):
@@ -244,20 +217,48 @@ class MainWindow(QMainWindow):
             )
 
             if result['success']:
-                # Обновление информации о результате
+                raw_path = result['raw_output_path']
+                filled_path = result['filled_output_path']
+
                 info_text = (
-                    f"VM шаблоны успешно сгенерированы!\n"
-                    f"Корневой элемент: {result['root_element']}\n"
-                    f"template_raw.vm: {result['raw_output_path']}\n"
-                    f"template_generated.vm: {result['filled_output_path']}\n"
-                    f"Выполнено замен: {result['replacements_count']}\n"
+                    f"<b>VM шаблоны успешно сгенерированы!</b><br>"
+                    f"Корневой элемент: {result['root_element']}<br>"
+                    f"template_raw.vm: <a href='file:///{raw_path}'>{raw_path}</a><br>"
+                    f"template_generated.vm: <a href='file:///{filled_path}'>{filled_path}</a><br>"
+                    f"Выполнено замен: {result['replacements_count']}<br>"
                     f"Структура: {result['structure_summary']}"
                 )
+
+                self.result_info.setTextFormat(Qt.TextFormat.RichText)
+                self.result_info.setTextInteractionFlags(
+                    Qt.TextInteractionFlag.TextBrowserInteraction
+                )
+                self.result_info.setOpenExternalLinks(True)
                 self.result_info.setText(info_text)
+
+                # Создаем строку с файлами для отображения в таблице
+                files_list = [
+                    f"{os.path.basename(self.scenario_file)}, {os.path.basename(self.xsd_file)}",
+                    f"{os.path.basename(result['raw_output_path'])}"
+                ]
+                files_display = "\n".join(files_list)
 
                 # Добавление в историю
                 history_item = {
-                    'file': f"{os.path.basename(result['raw_output_path'])}",
+                    'file': files_display,
+                    'files': {
+                        'input': [
+                            {'type': 'scenario', 'path': self.scenario_file,
+                             'name': os.path.basename(self.scenario_file)},
+                            {'type': 'xsd', 'path': self.xsd_file, 'name': os.path.basename(self.xsd_file)}
+                        ],
+                        'output': [
+                            {'type': 'raw_vm', 'path': result['raw_output_path'],
+                             'name': os.path.basename(result['raw_output_path'])},
+                            {'type': 'filled_vm', 'path': result['filled_output_path'],
+                             'name': os.path.basename(result['filled_output_path'])}
+                        ]
+                    },
                     'full_path': result['raw_output_path'],
                     'date': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                     'result': f"Успешно сгенерированы ({result['replacements_count']} замен)",
@@ -485,7 +486,7 @@ class MainWindow(QMainWindow):
                 background-color: black;
                 color: white;
             }
-            
+
             """
             app.setStyleSheet(style)
 
