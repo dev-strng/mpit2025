@@ -41,7 +41,7 @@ class MainWindow(QMainWindow):
 
         # Вкладка генерации VM шаблона
         self.processing_tab = self.create_processing_tab()
-        central_widget.addTab(self.processing_tab, "Генерация VM шаблона")
+        central_widget.addTab(self.processing_tab, "Создать шаблон")
 
         # Вкладка истории
         history_tab = self.history_manager.create_history_tab()
@@ -49,7 +49,7 @@ class MainWindow(QMainWindow):
 
         # Вкладка проектов
         groups_tab = self.group_manager.create_groups_tab()
-        central_widget.addTab(groups_tab, "Управление проектами")
+        central_widget.addTab(groups_tab, "Управлять проектами")
 
         # Меню
         self.create_menu()
@@ -60,12 +60,14 @@ class MainWindow(QMainWindow):
     def create_processing_tab(self):
         widget = QWidget()
         layout = QVBoxLayout()
+        layout.setSpacing(20)
 
         # Группа для выбора файлов
         files_group = QGroupBox("1. Выбор файлов для генерации адаптивного VM шаблона")
         files_group.setObjectName("file_group")
-        files_group.setStyleSheet("#file_group{font-size: 14pt}")
+        files_group.setStyleSheet("#file_group{font-size: 14pt; margin-top: 15px}")
         files_layout = QVBoxLayout()
+
 
         # Файл сценария
         scenario_layout = QHBoxLayout()
@@ -76,6 +78,7 @@ class MainWindow(QMainWindow):
         scenario_layout.addWidget(self.scenario_label, 4)
         scenario_layout.addWidget(btn_choose_scenario, 1)
         files_layout.addLayout(scenario_layout)
+        files_layout.setSpacing(15)
 
         # XSD файл
         xsd_layout = QHBoxLayout()
@@ -89,7 +92,7 @@ class MainWindow(QMainWindow):
 
         # Директория для сохранения
         output_layout = QHBoxLayout()
-        self.output_label = QLabel("4. Директория для сохранения: не выбрана (по умолчанию: текущая папка)")
+        self.output_label = QLabel("4. Директория для сохранения: не выбрана (по умолчанию: текущая папка, указывать необязательно)")
         self.output_label.setWordWrap(True)
         btn_choose_output = QPushButton("Выбрать директорию")
         btn_choose_output.clicked.connect(self.choose_output_dir)
@@ -215,15 +218,12 @@ class MainWindow(QMainWindow):
 
     def clear_files(self):
         self.scenario_file = None
-        self.service_file = None
         self.xsd_file = None
         self.output_dir = None
         self.scenario_label.setText("Файл сценария: не выбран")
         self.xsd_label.setText("XSD схема: не выбрана")
         self.output_label.setText("Директория для сохранения: не выбрана (по умолчанию: текущая папка)")
         self.result_info.setText("Результат: ")
-        self.raw_preview.clear()
-        self.filled_preview.clear()
 
     def generate_vm_template(self):
         if not all([self.scenario_file, self.xsd_file]):
@@ -257,7 +257,7 @@ class MainWindow(QMainWindow):
 
                 # Добавление в историю
                 history_item = {
-                    'file': f"VM шаблоны: {os.path.basename(result['raw_output_path'])}",
+                    'file': f"{os.path.basename(result['raw_output_path'])}",
                     'full_path': result['raw_output_path'],
                     'date': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                     'result': f"Успешно сгенерированы ({result['replacements_count']} замен)",

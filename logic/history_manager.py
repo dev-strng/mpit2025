@@ -252,7 +252,7 @@ class HistoryManager:
                 # Находим запись в истории по ID
                 history_item = next((item for item in self.history if item['id'] == item_id), None)
 
-                if history_item and history_item['group'] != 'Без проекта':
+                if history_item and history_item['group'] != 'Черновик':
                     # Удаляем из группы
                     group_name = history_item['group']
                     if item_id in self.main_window.group_manager.groups[group_name]:

@@ -90,7 +90,6 @@ class FileProcessor:
 
     @staticmethod
     def _parse_xsd(xsd_text):
-        """Парсит XSD и возвращает структуру элементов"""
         try:
             root = ET.fromstring(xsd_text.encode('utf-8'))
         except Exception as e:
@@ -205,7 +204,6 @@ class FileProcessor:
 
     @staticmethod
     def _to_camel_case(s):
-        """Преобразует строку в camelCase"""
         parts = re.split(r'[_\-\s\.]+', s)
         if not parts:
             return s
@@ -213,7 +211,6 @@ class FileProcessor:
 
     @staticmethod
     def _generate_vm_for_node(node, scenario, indent=2, list_name_overrides=None):
-        """Рекурсивно генерирует VM код для узла"""
         if list_name_overrides is None:
             list_name_overrides = {}
         pad = " " * indent
@@ -325,7 +322,7 @@ class FileProcessor:
     @staticmethod
     def _partially_render_vm(raw_vm, scenario, structure):
         placeholders = FileProcessor._collect_placeholders(raw_vm)
-        filled_vm = raw_vm
+        filled_vm = raw_vmF
         replacements = {}
 
         # Создаем карту путей для более точного поиска

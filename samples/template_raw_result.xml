@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<soc:AppDataRequest xmlns:xml="http://www.w3.org/XML/1998/namespace"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soc="http://socit.ru/kalin/orders/2.0.0"
+    xmlns:soc1="http://socit.ru/kalin/orders/2.0.0/attachments">
+
+  <soc:SetRequest>
+    <soc:orderId>ORD-2024-001</soc:orderId>
+    <soc:ServiceCode>3900000000173812673</soc:ServiceCode>
+    <soc:ServiceName>Единовременное пособие при рождении ребенка</soc:ServiceName>
+    <soc:SpravID>2</soc:SpravID>
+    <soc:DelegateInfo>1</soc:DelegateInfo>
+
+
+    <soc:userData>
+      <soc:lastName>Иванова</soc:lastName>
+      <soc:firstName>Мария</soc:firstName>
+      <soc:middleName>Сергеевна</soc:middleName>
+      <soc:birthDate>1990-05-15</soc:birthDate>
+      <soc:Sex>Ж</soc:Sex>
+      <soc:Snils>123-456-789-00</soc:Snils>
+      <soc:phone>+79991234567</soc:phone>
+      <soc:Email>maria.ivanova@mail.ru</soc:Email>
+      <soc:citizenship>РОССИЯ</soc:citizenship>
+      <soc:mrog>г. Москва</soc:mrog>
+    </soc:userData>
+
+
+    <soc:userDocument>
+      <soc:type>21</soc:type>
+      <soc:series>4510</soc:series>
+      <soc:number>123456</soc:number>
+      <soc:issuedBy>ОУФМС России по г. Москве</soc:issuedBy>
+      <soc:issueDate>2015-03-20</soc:issueDate>
+      <soc:departmentCode>770-123</soc:departmentCode>
+    </soc:userDocument>
+
+
+    <soc:children>
+      <soc:child>
+        <soc:childData>
+          <soc:lastName>Иванов</soc:lastName>
+          <soc:firstName>Алексей</soc:firstName>
+          <soc:middleName>Петрович</soc:middleName>
+          <soc:birthDate>2024-01-10</soc:birthDate>
+          <soc:Sex>М</soc:Sex>
+          <soc:citizenship>РОССИЯ</soc:citizenship>
+        </soc:childData>
+        <soc:childDocument>
+          <soc:type>106</soc:type>
+          <soc:number>VII-МЮ №123456</soc:number>
+          <soc:issuedBy>Отдел ЗАГС Центрального района г. Москвы</soc:issuedBy>
+          <soc:issueDate>2024-01-15</soc:issueDate>
+        </soc:childDocument>
+      </soc:child>
+    </soc:children>
+
+
+    <soc:regAddress>
+      <soc:fiasHouseCode>1234567890abc</soc:fiasHouseCode>
+      <soc:index>125009</soc:index>
+      <soc:town>Москва</soc:town>
+      <soc:street>ул. Тверская</soc:street>
+      <soc:house>25</soc:house>
+      <soc:apartment>42</soc:apartment>
+      <soc:strAddress>125009, г. Москва, ул. Тверская, д. 25, кв. 42</soc:strAddress>
+    </soc:regAddress>
+
+
+    <soc:payment>
+      <soc:BankInfo>
+        <soc:bankName>ПАО "Сбербанк"</soc:bankName>
+        <soc:bik>044525225</soc:bik>
+        <soc:account>40817810500001234567</soc:account>
+      </soc:BankInfo>
+    </soc:payment>
+
+
+    <soc:AppliedDocuments>
+      <soc:AppliedDocument>
+        <soc:Name>Свидетельство_о_рождении.pdf</soc:Name>
+        <soc:URL>doc12345</soc:URL>
+        <soc:typeName>Свидетельство о рождении</soc:typeName>
+      </soc:AppliedDocument>
+    </soc:AppliedDocuments>
+
+  </soc:SetRequest>
+</soc:AppDataRequest>
